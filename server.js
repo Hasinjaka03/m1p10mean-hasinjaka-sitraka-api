@@ -1,11 +1,13 @@
 // server.js
 const express = require('express');
+const cors = require('cors'); // Importer le package cors
 const mongoose = require('mongoose');
 const utilisateurRoutes = require('./routes/utilisateurRoutes');
 
 const app = express();
 
 // Middleware pour parser les requêtes JSON
+app.use(cors()); // 
 app.use(express.json());
 
 // Connecter à la base de données MongoDB
