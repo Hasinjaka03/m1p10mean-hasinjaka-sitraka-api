@@ -19,7 +19,7 @@ mongoose.connect('mongodb://localhost:27017/sallonbeautedb', {
 }).catch(err => console.error("Erreur lors de la connexion à MongoDB :", err));
 
 // Utiliser les routes pour les opérations CRUD de l'utilisateur
-app.use('/api', utilisateurRoutes);
+app.use('/utilisateur', utilisateurRoutes);
 
 // Écouter le port
 const port = process.env.PORT || 3000;
