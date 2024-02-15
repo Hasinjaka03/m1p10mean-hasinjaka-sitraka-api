@@ -21,3 +21,4 @@ exports.listeRendezvous = async (req, res) => {
     // En cas d'erreur, renvoyer une réponse avec le code d'erreur 500
     res.status(500).json({ message: err.message });
   }
+}

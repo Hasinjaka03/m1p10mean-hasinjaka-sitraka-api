@@ -3,6 +3,10 @@ const express = require('express');
 const cors = require('cors'); // Importer le package cors
 const mongoose = require('mongoose');
 const utilisateurRoutes = require('./routes/utilisateurRoutes');
+const rendezvousRoutes = require('./routes/rendezvousRoutes');
+const serviceRoutes = require('./routes/serviceRoutes');
+const { connectToDatabase } = require('./database'); // Importer la fonction connectToDatabase
+
 
 const app = express();
 
@@ -10,16 +14,12 @@ const app = express();
 app.use(cors()); // 
 app.use(express.json());
 
-// Connecter à la base de données MongoDB
-mongoose.connect('mongodb://localhost:27017/sallonbeautedb', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log("Connexion à MongoDB établie");
-}).catch(err => console.error("Erreur lors de la connexion à MongoDB :", err));
+connectToDatabase();
 
 // Utiliser les routes pour les opérations CRUD de l'utilisateur
 app.use('/utilisateur', utilisateurRoutes);
+app.use('/client', rendezvousRoutes);
+app.use('/manager', serviceRoutes);
 
 // Écouter le port
 const port = process.env.PORT || 3000;
