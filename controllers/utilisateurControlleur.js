@@ -37,3 +37,33 @@ exports.liste_utilisateurs = async (req, res) => {
   }
 };
 
+// **Liste des employes 
+exports.liste_employe = async (req,res) => {
+  try {
+    const employes = await Utilisateur.find({ profil: "employe" });
+    res.json(employes) ;
+  } catch (error) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+// **Mettre à jour une utilisateur par son ID**
+exports.updateUtilisateurById = async (req,res) => {
+  try{
+      const updateUtilisateur = await Utilisateur.findByIdAndUpdate(req.params.id, req.body, {new: true}) ;
+      res.status(200).json(updateUtilisateur) ;
+  } catch (error){
+      res.status(400).json({ message: error.message });
+  }
+};
+
+// **Supprimer une utilisateur par son ID**
+exports.deleteUtilisateurById = async (req,res) => {
+  try{
+      await Utilisateur.findByIdAndDelete(req.params.id) ;
+      res.status(200).json({message : 'Utilisateur supprimé avec succés'}) ;
+  } catch (error){
+      res.status(400).json({ message: error.message });
+  }
+};
+

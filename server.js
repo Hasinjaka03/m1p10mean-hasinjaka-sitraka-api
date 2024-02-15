@@ -4,6 +4,7 @@ const cors = require('cors'); // Importer le package cors
 const mongoose = require('mongoose');
 const utilisateurRoutes = require('./routes/utilisateurRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
+const employeRoutes = require('./routes/employeRoutes');
 
 const app = express();
 
@@ -23,7 +24,10 @@ mongoose.connect('mongodb://localhost:27017/sallonbeautedb', {
 app.use('/utilisateur', utilisateurRoutes);
 
 // Utiliser pour les routes du service
-app.use('/service', serviceRoutes);
+app.use('/manager/service', serviceRoutes);
+
+// utiliser pour les routes de gestion personnel dans manager
+app.use('/manager/employe',employeRoutes);
 
 // Écouter le port
 const port = process.env.PORT || 3000;
