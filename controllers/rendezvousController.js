@@ -15,7 +15,7 @@ exports.ajouterRendezvous = async (req, res) => {
 exports.listeRendezvous = async (req, res) => {
   try {
     // Utiliser la méthode find() de Mongoose pour récupérer tous les rendez-vous
-    const appointments = await Rendezvous.find().populate('service').populate('employee');
+    const appointments = await Rendezvous.find().populate('service').populate('employee').populate('client');
     res.status(200).json(appointments);
   } catch (err) {
     // En cas d'erreur, renvoyer une réponse avec le code d'erreur 500

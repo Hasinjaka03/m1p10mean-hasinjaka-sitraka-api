@@ -3,6 +3,7 @@ const Service = require('../models/service');
 exports.ajouterService = async (req, res) => {
   try {
     const nouvelService = new Service(req.body);
+    
     const serviceEnregistre = await nouvelService.save();
     res.status(201).json(serviceEnregistre);
   } catch (err) {
