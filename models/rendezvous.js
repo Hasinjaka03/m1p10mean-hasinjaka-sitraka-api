@@ -13,7 +13,8 @@ const rendezvousSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Utilisateur'
     },
-    date: Date
+    date: Date,
+    date_payement: Date,
 });
 
 module.exports = mongoose.model('Rendezvous', rendezvousSchema);
