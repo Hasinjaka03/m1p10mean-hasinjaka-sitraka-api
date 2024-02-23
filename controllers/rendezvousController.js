@@ -16,9 +16,10 @@ exports.ajouterRendezvous = async (req, res) => {
 
 
 exports.listeRendezvous = async (req, res) => {
+  const clientId = req.params.clientId;
   try {
     // Utiliser la méthode find() de Mongoose pour récupérer tous les rendez-vous
-    const appointments = await Rendezvous.find().populate('service').populate('employee').populate('client');
+    const appointments = await Rendezvous.find({client: clientId}).populate('service').populate('employee').populate('client');
     res.status(200).json(appointments);
   } catch (err) {
     // En cas d'erreur, renvoyer une réponse avec le code d'erreur 500
@@ -52,7 +53,7 @@ exports.payerRendezvous = async (req, res) => {
 
 
   exports.getProchainRendezvous = async (req,res) => {
-  const clientId = req.params.id;
+  const clientId = req.params.clientId;
   try {
     // Obtenez la date actuelles
     const maintenant = new Date();
