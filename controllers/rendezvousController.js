@@ -49,3 +49,22 @@ exports.payerRendezvous = async (req, res) => {
     return res.status(500).json({ message: 'Erreur lors de la mise à jour de la date de paiement' });
   }
 }
+
+
+  exports.getProchainRendezvous = async (req,res) => {
+  const clientId = req.params.id;
+  try {
+    // Obtenez la date actuelles
+    const maintenant = new Date();
+
+    // Recherchez le prochain rendez-vous du client
+    const prochainRendezvous = await Rendezvous.findOne({
+      client: clientId,
+      date: { $gt: maintenant } // Date doit être dans le futur
+    }).sort({ date: 1 }); // Trier par date dans l'ordre croissant
+
+    res.status(200).json(prochainRendezvous);
+  } catch (error) {
+    res.status(500).json({ message: err.message });
+  }
+}
