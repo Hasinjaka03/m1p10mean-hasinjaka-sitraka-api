@@ -4,7 +4,8 @@ const cors = require('cors'); // Importer le package cors
 const mongoose = require('mongoose');
 const utilisateurRoutes = require('./routes/utilisateurRoutes');
 const rendezvousRoutes = require('./routes/rendezvousRoutes');
-const serviceRoutes = require('./routes/serviceRoutes');
+const serviceRoutes = require('./routes/serviceRoutes'); 
+const preferenceRoutes = require('./routes/preferenceRoutes'); 
 const { connectToDatabase } = require('./database'); // Importer la fonction connectToDatabase
 
 
@@ -20,6 +21,7 @@ connectToDatabase();
 app.use('/utilisateur', utilisateurRoutes);
 app.use('/client', rendezvousRoutes);
 app.use('/manager', serviceRoutes);
+app.use('/client', preferenceRoutes);
 
 // Écouter le port
 const port = process.env.PORT || 3000;
