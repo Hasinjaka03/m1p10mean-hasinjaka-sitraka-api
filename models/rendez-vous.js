@@ -13,7 +13,11 @@ const rendezvousSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "Utilisateur"
     },
-    date: Date
-});
+    date: Date ,
+    etat: {
+        type: Boolean,
+        default: false // Valeur par défaut
+      }
+}, {collection: 'rendezvous'});
 
-module.exports = mongoose.model('Rendezvous', rendezvousSchema);
+module.exports = mongoose.model('Rendezvous', rendezvousSchema );

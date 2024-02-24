@@ -17,13 +17,13 @@ exports.login = async (req, res) => {
   try {
     const utilisateur = await Utilisateur.findOne({ email });
     if (!utilisateur || utilisateur.motDePasse !== motDePasse) {
-      return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
+      return res.status(401).json({ message: 'Email ou mot de passe incorrect' , success : false });
     }
     // Authentification réussie, renvoyer une réponse appropriée (par exemple, un token JWT)
-    res.status(200).json({ message: 'Authentification réussie', utilisateur });
+    res.status(200).json({ message: 'Authentification réussie', utilisateur , success : true });
   } catch (err) {
     console.error("Erreur lors de l'authentification :", err);
-    res.status(500).json({ message: 'Erreur lors de l\'authentification' });
+    res.status(500).json({ message: 'Erreur lors de l\'authentification' , success : false});
   }
 };
 
@@ -66,4 +66,6 @@ exports.deleteUtilisateurById = async (req,res) => {
       res.status(400).json({ message: error.message });
   }
 };
+
+
 

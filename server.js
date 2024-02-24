@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const utilisateurRoutes = require('./routes/utilisateurRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const employeRoutes = require('./routes/employeRoutes');
+const rendezvousRoutes = require('./routes/rendezvousRoutes');
 
 const app = express();
 
@@ -28,6 +29,9 @@ app.use('/manager/service', serviceRoutes);
 
 // utiliser pour les routes de gestion personnel dans manager
 app.use('/manager/employe',employeRoutes);
+
+// utiliser pour les routes du rendez_vous dans employe
+app.use('/employe/rendezvous',rendezvousRoutes) ;
 
 // Écouter le port
 const port = process.env.PORT || 3000;
