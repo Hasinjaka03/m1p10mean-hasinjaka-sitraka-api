@@ -9,7 +9,15 @@ const utilisateurSchema = new mongoose.Schema({
   numeroTelephone: String,
   profil: String,
   email: String,
-  motDePasse: String
+  motDePasse: String ,
+  heureDebut : {
+    type: String,
+    default: '8h00'
+  }, 
+  heureFin : {
+    type: String,
+    default: '17h00'
+  }
 });
 
 module.exports = mongoose.model('Utilisateur', utilisateurSchema);
