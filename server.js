@@ -6,6 +6,7 @@ const utilisateurRoutes = require('./routes/utilisateurRoutes');
 const rendezvousRoutes = require('./routes/rendezvousRoutes');
 const serviceRoutes = require('./routes/serviceRoutes'); 
 const preferenceRoutes = require('./routes/preferenceRoutes'); 
+const depenseRoutes = require('./routes/depenseRoutes'); 
 const { connectToDatabase } = require('./database'); // Importer la fonction connectToDatabase
 
 
@@ -22,6 +23,7 @@ app.use('/utilisateur', utilisateurRoutes);
 app.use('/client', rendezvousRoutes);
 app.use('/manager', serviceRoutes);
 app.use('/client', preferenceRoutes);
+app.use('/manager', depenseRoutes);
 
 // Écouter le port
 const port = process.env.PORT || 3000;
