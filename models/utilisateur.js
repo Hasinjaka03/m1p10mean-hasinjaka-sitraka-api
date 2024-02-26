@@ -12,12 +12,13 @@ const utilisateurSchema = new mongoose.Schema({
   motDePasse: String ,
   heureDebut : {
     type: String,
-    default: '8h00'
+    default: '08h00'
   }, 
   heureFin : {
     type: String,
     default: '17h00'
-  }
+  },
+  photo : String
 });
 
 module.exports = mongoose.model('Utilisateur', utilisateurSchema);
