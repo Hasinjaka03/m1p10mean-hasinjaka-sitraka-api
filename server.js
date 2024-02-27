@@ -20,7 +20,7 @@ app.use(express.json());
 connectToDatabase();
 
 // Utiliser les routes pour les opérations CRUD de l'utilisateur
-app.use('/utilisateur', utilisateurRoutes);
+app.use('', utilisateurRoutes);
 app.use('/client', rendezvousRoutes);
 app.use('/manager', serviceRoutes);
 app.use('/client', preferenceRoutes);

@@ -29,9 +29,9 @@ exports.login = async (req, res) => {
 };
 
 
-exports.liste_utilisateurs = async (req, res) => {
+exports.liste_employe = async (req, res) => {
   try {
-    const utilisateurs = await Utilisateur.find();
+    const utilisateurs = await Utilisateur.find({profil : 'employe'});
     res.json(utilisateurs);
   } catch (err) {
     res.status(500).json({ message: err.message });

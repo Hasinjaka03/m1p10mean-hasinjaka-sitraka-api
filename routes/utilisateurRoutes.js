@@ -4,8 +4,8 @@ const utilisateurController = require('../controllers/utilisateurControlleur');
 
 const router = express.Router();
 
-router.post('/inscription', utilisateurController.ajouterUtilisateur);
-router.post('/login', utilisateurController.login);
-router.get('/liste_employe', utilisateurController.liste_utilisateurs);
+router.post('/utilisateur/inscription', utilisateurController.ajouterUtilisateur);
+router.post('/utilisateur/login', utilisateurController.login);
+router.get('/manager/liste_employe', utilisateurController.liste_employe);
 
 module.exports = router;
