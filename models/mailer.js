@@ -39,11 +39,11 @@ const sendTestEmail = async (to) => {
 
   //EMAIL OPTIONS
   const from = MY_EMAIL;
-  const subject = "🌻 This Is Sent By NodeMailer 🌻";
+  const subject = "🌻 Sallon de beaute 🌻";
   const html = `
-    <p>Hey ${to},</p>
-    <p>🌻 This Is A Test Mail Sent By NodeMailer 🌻</p>
-    <p>Thank you</p>
+    <p>Bonjour ${to},</p>
+    <p>🌻 Une offre speciale sera valide du 03 au 30 Mars. Ne ratez pas cette occasion. 🌻</p>
+    <p>SALLON BEAUTE</p>
     `;
   return new Promise((resolve, reject) => {
     transport.sendMail({ from, subject, to, html }, (err, info) => {
