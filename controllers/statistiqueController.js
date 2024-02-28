@@ -129,3 +129,78 @@ exports.getRendezvousCountByDay = async (req, res) => {
 
 
 
+exports.getChiffreAffaires = async (req, res) => {
+  try {
+    const annee = parseInt(req.query.annee); // Convertir en nombre
+    let debutAnnee = new Date(annee, 0, 1); // Date de début de l'année
+    let finAnnee = new Date(annee, 11, 31); // Date de fin de l'année
+    let group_id = { $month : "$date"}
+    let ref_temp=Array.from({ length: 12 }, (_, index) => index + 1)
+
+    // Vérifier si le paramètre mois est fourni
+    if (req.query.mois) {
+      const mois = parseInt(req.query.mois); // Convertir en nombre
+      debutAnnee = new Date(annee, mois - 1, 1); // Date de début du mois spécifié
+      finAnnee = new Date(annee, mois, 0); // Date de fin du mois spécifié
+      group_id= { $dayOfMonth : "$date"}
+      const joursDansMois = new Date(annee, mois, 0).getDate();
+      ref_temp = Array.from({ length: joursDansMois }, (_, index) => index + 1);
+    }
+
+
+
+    // Utiliser la méthode aggregate pour agréger les données
+// Utiliser la méthode aggregate pour agréger les données
+// Utiliser la méthode aggregate pour agréger les données
+const chiffreAffaires = await Rendezvous.aggregate([
+  {
+    // Filtrez les rendez-vous pour la plage de dates spécifiée
+    $match: {
+      date: {
+        $gte: debutAnnee,
+        $lte: finAnnee
+      }
+    }
+  },
+  {
+    // Rechercher les données du service pour chaque rendez-vous
+    $lookup: {
+      from: "services", // Nom de la collection des services
+      localField: "service", // Champ local à partir duquel faire correspondre les documents
+      foreignField: "_id", // Champ dans la collection des services à utiliser pour la correspondance
+      as: "serviceData" // Nom du champ qui contiendra les données du service
+    }
+  },
+  {
+    // Déplier les données du service pour chaque rendez-vous
+    $unwind: "$serviceData"
+  },
+  {
+    // Groupez les rendez-vous par mois ou par jour
+    $group: {
+      _id: group_id,
+      chiffreAffaire: {
+        // Calculer le chiffre d'affaires total pour chaque groupe
+        $sum: "$serviceData.tarif"
+      }
+    }
+  }
+]);
+
+const result = ref_temp.map(jour => {
+  const chifffreaffaireDuJour = chiffreAffaires.find(chifffreaffaireDuJour => chifffreaffaireDuJour._id === jour);
+  return { jour, chiffreaffaire: chifffreaffaireDuJour ? chifffreaffaireDuJour.chiffreAffaire : 0 };
+});
+
+console.log(chiffreAffaires)
+
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
+
