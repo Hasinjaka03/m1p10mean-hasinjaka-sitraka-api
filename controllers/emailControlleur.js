@@ -1,22 +1,23 @@
 // controlleur pour l'envoye d'email
 
 const nodemailer = require('nodemailer');
+const { sendTestEmail } = require ('../models/mailer');
 
 exports.sendEmail = (req,res) => {
     // nodemailer.createTestAccount()
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user : 'devoirmaster@gmail.com',
-            pass: 'devoirP14'
+            user : 'sfgf',
+            pass: 'sdfgsfdg'
         }
     });
 
     const mailOptions = {
-        from: 'devoirmaster@gmail.com',
-        to : req.body.to,
-        subject: req.body.subject,
-        text: req.body.text
+        from: 'sdfgsdfg',
+        to : 'sdfg',
+        subject: 'test',
+        text: 'test ftsn'
     };
 
     transporter.sendMail(mailOptions,function(error,info){
@@ -29,4 +30,24 @@ exports.sendEmail = (req,res) => {
             res.status(200).json({ message: 'E-mail envoyé avec succès' , success : true});
         }
     });
+};
+
+
+
+
+
+exports.sendEmail2 = async (req,res) => { 
+
+const SENDER_EMAIL_ID = "hasinjaka.kontiki@gmail.com";
+  try {
+    if (SENDER_EMAIL_ID === "EMAIL_ID") {
+      throw new Error(
+        "Please update SENDER_EMAIL_ID with your email id in server.js"
+      );
+    }
+    const info = await sendTestEmail(SENDER_EMAIL_ID);
+    res.send(info);
+  } catch (error) {
+    res.send(error);
+  }
 };
