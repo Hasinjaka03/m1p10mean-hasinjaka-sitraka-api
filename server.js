@@ -6,12 +6,13 @@ const utilisateurRoutes = require('./routes/utilisateurRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const employeRoutes = require('./routes/employeRoutes');
 const rendezvousRoutes = require('./routes/rendezvousRoutes');
+const emailRoutes = require('./routes/emailRoutes');
 
 const app = express();
 
 // Middleware pour parser les requêtes JSON
 app.use(cors()); // 
-app.use(express.json());
+app.use(express.json({limit:'5mb'}));
 
 // Connecter à la base de données MongoDB
 mongoose.connect('mongodb://localhost:27017/sallonbeautedb', {
@@ -32,6 +33,9 @@ app.use('/manager/employe',employeRoutes);
 
 // utiliser pour les routes du rendez_vous dans employe
 app.use('/employe/rendezvous',rendezvousRoutes) ;
+
+// utiliser pour les routes de l'envoye d'email
+app.use('/manager/email',emailRoutes) ;
 
 // Écouter le port
 const port = process.env.PORT || 3000;

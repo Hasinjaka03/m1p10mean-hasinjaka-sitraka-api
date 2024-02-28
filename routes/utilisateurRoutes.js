@@ -7,5 +7,6 @@ const router = express.Router();
 router.post('/inscription', utilisateurController.ajouterUtilisateur);
 router.post('/login', utilisateurController.login);
 router.get('/liste', utilisateurController.liste_utilisateurs);
+router.get('/getAllClient',utilisateurController.liste_client);
 
 module.exports = router;

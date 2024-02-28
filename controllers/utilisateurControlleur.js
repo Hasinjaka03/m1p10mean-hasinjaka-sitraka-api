@@ -43,7 +43,17 @@ exports.liste_employe = async (req,res) => {
     const employes = await Utilisateur.find({ profil: "employe" });
     res.json(employes) ;
   } catch (error) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: error.message });
+  }
+}
+
+// **Liste des clients
+exports.liste_client = async (req,res) => {
+  try {
+    const clients = await Utilisateur.find({ profil: "client" });
+    res.json(clients) ;
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 }
 
