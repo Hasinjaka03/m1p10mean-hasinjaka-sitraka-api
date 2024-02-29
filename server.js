@@ -37,6 +37,7 @@ app.use('/manager/employe',employeRoutes);
 app.use('/manager/email',emailRoutes) ;
 
 app.use('/client', rendezvousRoutes);
+app.use('/employe/rendezvous', rendezvousRoutes);
 app.use('/client', preferenceRoutes);
 app.use('/manager', depenseRoutes);
 app.use('/manager/statistique', statistiqueRoutes);

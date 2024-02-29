@@ -80,7 +80,7 @@ exports.rendezvousByIdemploye = async (req,res) => {
       // res.json(employeId);
       const dateR = new Date("2024-02-15");
       // const liste_rendezvous = await RendezVous.find({ "date" : { $gte : dateR}}) ;
-      const liste_rendezvous = await RendezVous.find({ "employee" : employeId}).sort({"date" : -1})
+      const liste_rendezvous = await Rendezvous.find({ "employee" : employeId}).sort({"date" : -1})
       .populate('client service')
       .exec() 
       ;
@@ -105,12 +105,12 @@ exports.updateEtatByIdrd = async (req, res) => {
 try {
   const employeId = req.params.id_employee ;
     // Utilisez findByIdAndUpdate pour trouver et mettre à jour le document
-     await RendezVous.findByIdAndUpdate(
+     await Rendezvous.findByIdAndUpdate(
       req.params.id_rd , // ID du document à mettre à jour
         { etat: req.body.etat }, // Nouvelles valeurs à mettre à jour
         { new: true } // Option pour retourner le document mis à jour
     );
-    const liste_rd = await RendezVous.find({ "employee" : employeId}).sort({"date" : -1})
+    const liste_rd = await Rendezvous.find({ "employee" : employeId}).sort({"date" : -1})
     .populate('client service')
     .exec() 
     ;
