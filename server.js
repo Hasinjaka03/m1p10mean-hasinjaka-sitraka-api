@@ -28,7 +28,6 @@ app.use('/manager/service', serviceRoutes);
 app.use('/manager/employe',employeRoutes);
 
 // utiliser pour les routes du rendez_vous dans employe
-app.use('/employe/rendezvous',rendezvousRoutes) ;
 
 // utiliser pour les routes de l'envoye d'email
 app.use('/manager/email',emailRoutes) ;
