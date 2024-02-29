@@ -7,6 +7,9 @@ const serviceRoutes = require('./routes/serviceRoutes');
 const employeRoutes = require('./routes/employeRoutes');
 const rendezvousRoutes = require('./routes/rendezvousRoutes');
 const emailRoutes = require('./routes/emailRoutes');
+const preferenceRoutes = require('./routes/preferenceRoutes'); 
+const depenseRoutes = require('./routes/depenseRoutes'); 
+const statistiqueRoutes = require('./routes/statistiqueRoutes'); 
 
 const app = express();
 
@@ -30,9 +33,7 @@ app.use('/employe/rendezvous',rendezvousRoutes) ;
 // utiliser pour les routes de l'envoye d'email
 app.use('/manager/email',emailRoutes) ;
 
-app.use('', utilisateurRoutes);
 app.use('/client', rendezvousRoutes);
-app.use('/manager', serviceRoutes);
 app.use('/client', preferenceRoutes);
 app.use('/manager', depenseRoutes);
 app.use('/manager/statistique', statistiqueRoutes);
