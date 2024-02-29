@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 const Rendezvous = require('../models/rendezvous');
-const Utilisateur = require('../models/utilisateur');
+const Depense = require('../models/depense');
 
 exports.tempsMoyenTravailParJour = async (req, res) => {
   try {
@@ -200,6 +200,127 @@ console.log(chiffreAffaires)
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
+exports.getProfitsByMonth = async (req, res) => {
+  try {
+    const annee = parseInt(req.query.annee); // Convertir en nombre
+    let debutAnnee = new Date(annee, 0, 1); // Date de début de l'année
+    let finAnnee = new Date(annee, 11, 31); // Date de fin de l'année
+    let group_id = { $month: "$date" };
+
+
+    // Calculer les revenus par mois
+    const revenues = await Rendezvous.aggregate([
+      {
+        // Filtrez les rendez-vous pour la plage de dates spécifiée
+        $match: {
+          date: {
+            $gte: debutAnnee,
+            $lte: finAnnee
+          }
+        }
+      },
+      {
+        // Rechercher les données du service pour chaque rendez-vous
+        $lookup: {
+          from: "services", // Nom de la collection des services
+          localField: "service", // Champ local à partir duquel faire correspondre les documents
+          foreignField: "_id", // Champ dans la collection des services à utiliser pour la correspondance
+          as: "serviceData" // Nom du champ qui contiendra les données du service
+        }
+      },
+      {
+        // Déplier les données du service pour chaque rendez-vous
+        $unwind: "$serviceData"
+      },
+      {
+        // Groupez les rendez-vous par mois ou par jour
+        $group: {
+          _id: group_id,
+          revenue: {
+            // Calculer le chiffre d'affaires total pour chaque groupe
+            $sum: "$serviceData.tarif"
+          }
+        }
+      }
+    ]);
+
+    // Calculer les commissions par mois
+    const commissions = await Rendezvous.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: debutAnnee,
+            $lte: finAnnee
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: "services",
+          localField: "service",
+          foreignField: "_id",
+          as: "serviceData"
+        }
+      },
+      {
+        $unwind: "$serviceData"
+      },
+      {
+        $group: {
+          _id: group_id,
+          totalCommission: { $sum: { $divide: [{ $multiply: ["$serviceData.tarif", "$serviceData.commission"] }, 100] }} // Calculer la commission totale pour chaque mois ou jour
+        }
+      }
+    ]);
+
+    // Calculer les dépenses par mois (commissions des services et salaires des employés)
+    const expenses = await Depense.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: debutAnnee,
+            $lte: finAnnee
+          }
+        }
+      },
+      {
+        $group: {
+          _id: group_id,
+          totalExpense: { $sum: "$montant" } // Calculer les dépenses totales pour chaque mois ou jour
+        }
+      }
+    ]);
+
+    const allMonths = Array.from({ length: 12 }, (_, i) => ({ _id: i + 1 }));
+
+// Fusionner la liste avec les résultats de l'agrégation
+const allRevenues = allMonths.map(month => {
+  const revenue = revenues.find(p => p._id === month._id);
+  return {
+    _id: month._id,
+    revenue: revenue ? revenue.revenue : 0
+  };
+});
+
+    // Calculer les bénéfices en soustrayant les dépenses des revenus
+    const profits = allRevenues.map(revenue => {
+      const commission = commissions.find(commission => commission._id === revenue._id);
+      const expense = expenses.find(expense => expense._id === revenue._id);
+      return {
+        _id: revenue._id,
+        profit: revenue.revenue - (commission ? commission.totalCommission : 0) - (expense ? expense.totalExpense : 0) // Soustraire les dépenses des revenus
+      };
+    });
+
+    res.status(200).json(profits);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 
 
