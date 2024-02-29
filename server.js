@@ -14,13 +14,6 @@ const app = express();
   app.use(cors()); // 
   app.use(express.json({limit:'5mb'}));
 
-// Connecter à la base de données MongoDB
-// mongoose.connect('mongodb://localhost:27017/sallonbeautedb', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// }).then(() => {
-//   console.log("Connexion à MongoDB établie");
-// }).catch(err => console.error("Erreur lors de la connexion à MongoDB :", err));
 
 // Utiliser les routes pour les opérations CRUD de l'utilisateur
 app.use('/utilisateur', utilisateurRoutes);
