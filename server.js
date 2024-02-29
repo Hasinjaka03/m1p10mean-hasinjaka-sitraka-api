@@ -13,7 +13,7 @@ const statistiqueRoutes = require('./routes/statistiqueRoutes');
 
 const app = express();
 
-const connectToDatabase = require('./database');
+const {connectToDatabase} = require('./database');
 
 connectToDatabase();
 

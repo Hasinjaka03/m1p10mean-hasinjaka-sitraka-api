@@ -72,17 +72,6 @@ exports.payerRendezvous = async (req, res) => {
 
 
 
-exports.ajouterRendezvous = async (req, res) => {
-  try {
-    const nouvelRendezvous = new RendezVous(req.body);
-    const rendezvousEnregistre = await nouvelRendezvous.save();
-    res.status(201).json(rendezvousEnregistre);
-  } catch (err) {
-    console.error("Erreur lors de l'ajout de l'utilisateur :", err);
-    res.status(500).send("Erreur lors de l'ajout de l'utilisateur");
-  }
-};
-
 // ** Liste des rendez vous pour un employe **
 exports.rendezvousByIdemploye = async (req,res) => {
   try{
