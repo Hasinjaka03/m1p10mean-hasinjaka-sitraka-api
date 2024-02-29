@@ -37,6 +37,12 @@ app.use('/employe/rendezvous',rendezvousRoutes) ;
 // utiliser pour les routes de l'envoye d'email
 app.use('/manager/email',emailRoutes) ;
 
+app.use('', utilisateurRoutes);
+app.use('/client', rendezvousRoutes);
+app.use('/manager', serviceRoutes);
+app.use('/client', preferenceRoutes);
+app.use('/manager', depenseRoutes);
+app.use('/manager/statistique', statistiqueRoutes);
 
 
 
