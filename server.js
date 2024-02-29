@@ -13,6 +13,10 @@ const statistiqueRoutes = require('./routes/statistiqueRoutes');
 
 const app = express();
 
+const connectToDatabase = require('./database');
+
+connectToDatabase();
+
 // Middleware pour parser les requêtes JSON
   app.use(cors()); // 
   app.use(express.json({limit:'5mb'}));
